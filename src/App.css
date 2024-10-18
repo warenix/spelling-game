@@ -1,38 +1,107 @@
-.App {
+/* App.css */
+
+body {
+  background-color: #42e592;
+}
+/* Make it more fun for students */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.game-title {
+  font-size: 2.5rem;
+  color: #2a9d8f;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.masked-word {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  background-color: #ffeb3b;
+  border-radius: 5px;
+  padding: 10px 20px;
+  display: inline-block;
+  margin-bottom: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.highlight {
+  color: #e63946;
+  font-weight: bold;
+}
+
+.button-group {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 10px;
+}
+
+button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
   color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  transform: scale(1.05);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.choice-button.selected {
+  background-color: #28a745;
+}
+
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.speak-button {
+  background-color: #ffb703;
+  margin-left: 10px;
+}
+
+.submit-button {
+  background-color: #e76f51;
+}
+
+.feedback {
+  font-size: 1.2rem;
+  margin-top: 20px;
+  color: #264653;
+}
+
+@media (max-width: 600px) {
+  .game-title {
+      font-size: 1.8rem;
   }
-  to {
-    transform: rotate(360deg);
+  .masked-word {
+      font-size: 1.5rem;
+  }
+  button {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .masked-word {
+      font-size: 1.2rem;
+      padding: 5px 10px;
+  }
+  button {
+      font-size: 0.8rem;
   }
 }
