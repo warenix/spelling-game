@@ -150,7 +150,7 @@ const Game = () => {
                 <button onClick={checkGuess} className="submit-button">Submit</button>
             </div>
             <p className="feedback">{feedback}</p>
-            <button onClick={() => navigate('/')} className="word-list-button">Set Word List</button>
+            <button onClick={() => navigate('/wordList')} className="word-list-button">Set Word List</button>
         </div>
     );
 }
