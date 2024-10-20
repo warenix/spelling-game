@@ -1,32 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 var Hypher = require('hypher'),
     english = require('hyphenation.en-us'),
     h = new Hypher(english);
 
-// Function to fetch words from URL parameter
-const getWordsFromURL = () => {
-    const params = new URLSearchParams(window.location.search);
-    const wordList = params.get('wordList');
-    return wordList ? wordList.split('|') : ["birthday", "afternoon", "teacher"];
+const getWordsFromStorage = () => {
+    const wordList = localStorage.getItem('wordList');
+    return wordList ? JSON.parse(wordList) : ["birthday", "afternoon", "teacher"];
 };
 
 const getMaskedWordAndChoices = (word) => {
     const chunks = h.hyphenate(word);
     let maskedWord = '';
     let choices = [];
-
     chunks.forEach(chunk => {
         const index = Math.floor(Math.random() * chunk.length);
         maskedWord += chunk.substr(0, index) + '_' + chunk.substr(index + 1) + '-';
         choices.push(chunk[index]);
     });
-
-    // maskedWord is sliced to remove trailing hyphen for neatness
     maskedWord = maskedWord.slice(0, -1);
-
-    let maskedWordToDisplay = maskedWord.replace(/_/g, ('<span class="highlight">_</span>'));
-
-    // Add some decoy choices
+    let maskedWordToDisplay = maskedWord.replace(/_/g, '<span class="highlight">_</span>');
     const alphabets = 'abcdefghijklmnopqrstuvwxyz';
     while (choices.length < chunks.length + 2) {
         const randomLetter = alphabets[Math.floor(Math.random() * alphabets.length)];
@@ -34,20 +27,18 @@ const getMaskedWordAndChoices = (word) => {
             choices.push(randomLetter);
         }
     }
-
-    // Shuffle the choices
     choices = choices.sort(() => Math.random() - 0.5);
-
     return { maskedWord, choices, maskedWordToDisplay };
 }
 
 const Game = () => {
-    const words = getWordsFromURL();
+    const words = getWordsFromStorage();
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const [currentWord, setCurrentWord] = useState(words[0]);
     const [maskedWordData, setMaskedWordData] = useState(getMaskedWordAndChoices(words[0]));
     const [selectedLetters, setSelectedLetters] = useState([]);
     const [feedback, setFeedback] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         setCurrentWord(words[currentWordIndex]);
@@ -70,18 +61,14 @@ const Game = () => {
         const maskedParts = maskedWordData.maskedWord.split('-');
         const underscoresCount = maskedParts.reduce((count, part) => count + (part.match(/_/g) || []).length, 0);
         const validSelectedLetters = selectedLetters.filter(letter => letter !== null && letter !== undefined);
-
         if (validSelectedLetters.length !== underscoresCount) {
             setFeedback('Please select the correct number of letters.');
             return;
         }
-
         const allPermutations = getAllPermutations(validSelectedLetters);
-
         for (const permutation of allPermutations) {
             let reconstructedWord = '';
             let selectionIndex = 0;
-
             maskedParts.forEach(chunk => {
                 let updatedChunk = chunk;
                 for (let i = 0; i < chunk.length; i++) {
@@ -92,9 +79,7 @@ const Game = () => {
                 }
                 reconstructedWord += updatedChunk + '-';
             });
-
             reconstructedWord = reconstructedWord.slice(0, -1);
-
             if (reconstructedWord === h.hyphenate(currentWord).join('-')) {
                 setFeedback('Correct!');
                 setTimeout(() => {
@@ -107,7 +92,6 @@ const Game = () => {
                 return;
             }
         }
-
         setFeedback('Try again.');
     };
 
@@ -126,19 +110,14 @@ const Game = () => {
         return permutations;
     };
 
-
-
     const pronounceWord = () => {
         const utterance = new SpeechSynthesisUtterance(currentWord);
         utterance.rate = 0.8; // Slower speech rate (1 is normal, <1 is slower)
-
         const voices = speechSynthesis.getVoices();
         const femaleVoice = voices.find(voice => voice.name === 'Google UK English Female') || voices.find(voice => voice.gender === 'female');
-
         if (femaleVoice) {
             utterance.voice = femaleVoice;
         }
-
         speechSynthesis.speak(utterance);
     };
 
@@ -164,9 +143,9 @@ const Game = () => {
                 <button onClick={checkGuess} className="submit-button">Submit</button>
             </div>
             <p className="feedback">{feedback}</p>
+            <button onClick={() => navigate('/wordList')} className="word-list-button">Set Word List</button>
         </div>
     );
-      
-};
+}
 
 export default Game;

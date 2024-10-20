@@ -73,6 +73,10 @@ button:disabled {
   background-color: #e76f51;
 }
 
+.word-list-button {
+  background-color: #264653;
+}
+
 .feedback {
   font-size: 1.2rem;
   margin-top: 20px;
