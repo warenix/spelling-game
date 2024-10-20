@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 var Hypher = require('hypher'),
     english = require('hyphenation.en-us'),
-    h = new Hypher(english, 1,1);
+    h = new Hypher(english);
 
 // Function to fetch words from URL parameter
 const getWordsFromURL = () => {
