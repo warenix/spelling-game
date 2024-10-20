@@ -18,6 +18,7 @@ const getMaskedWordAndChoices = (word) => {
         maskedWord += chunk.substr(0, index) + '_' + chunk.substr(index + 1) + '-';
         choices.push(chunk[index]);
     });
+    // maskedWord is sliced to remove trailing hyphen for neatness
     maskedWord = maskedWord.slice(0, -1);
     let maskedWordToDisplay = maskedWord.replace(/_/g, '<span class="highlight">_</span>');
     const alphabets = 'abcdefghijklmnopqrstuvwxyz';
@@ -38,6 +39,8 @@ const Game = () => {
     const [maskedWordData, setMaskedWordData] = useState(getMaskedWordAndChoices(words[0]));
     const [selectedLetters, setSelectedLetters] = useState([]);
     const [feedback, setFeedback] = useState('');
+    const [showCorrectWord, setShowCorrectWord] = useState(false);
+    const [wordClass, setWordClass] = useState('masked-word');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -81,14 +84,18 @@ const Game = () => {
             });
             reconstructedWord = reconstructedWord.slice(0, -1);
             if (reconstructedWord === h.hyphenate(currentWord).join('-')) {
-                setFeedback('Correct!');
+                setShowCorrectWord(true);
+                setWordClass('masked-word correct');
                 setTimeout(() => {
+                    setFeedback('Correct!');
+                    setShowCorrectWord(false);
+                    setWordClass('masked-word');
                     if (currentWordIndex < words.length - 1) {
                         setCurrentWordIndex(currentWordIndex + 1);
                     } else {
                         setFeedback('You’ve completed all the words! Great job!');
                     }
-                }, 1000);
+                }, 1500);
                 return;
             }
         }
@@ -125,7 +132,7 @@ const Game = () => {
         <div className="container">
             <h1 className="game-title">Spelling Game</h1>
             <p>
-                <span className="masked-word" dangerouslySetInnerHTML={{ __html: maskedWordData.maskedWordToDisplay }}></span>
+                <span className={wordClass} dangerouslySetInnerHTML={{ __html: showCorrectWord ? currentWord : maskedWordData.maskedWordToDisplay }}></span>
                 <button onClick={pronounceWord} className="speak-button">
                     Speak
                 </button>
@@ -143,7 +150,7 @@ const Game = () => {
                 <button onClick={checkGuess} className="submit-button">Submit</button>
             </div>
             <p className="feedback">{feedback}</p>
-            <button onClick={() => navigate('/wordList')} className="word-list-button">Set Word List</button>
+            <button onClick={() => navigate('/')} className="word-list-button">Set Word List</button>
         </div>
     );
 }

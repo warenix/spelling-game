@@ -24,6 +24,12 @@
   padding: 10px 20px;
   display: inline-block;
   margin-bottom: 20px;
+  transition: all 0.5s ease;
+}
+
+.masked-word.correct {
+  background-color: #28a745;
+  color: white;
 }
 
 .highlight {
