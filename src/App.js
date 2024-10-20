@@ -1,14 +1,18 @@
-// src/App.js
 import React from 'react';
-import './App.css';
+import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import WordListPage from './WordListPage';
 import Game from './Game';
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
-            <Game />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/game" element={<Game />} />
+                <Route path="/" element={<WordListPage />} />
+            </Routes>
+        </Router>
     );
-}
+};
 
-export default App
+export default App;
