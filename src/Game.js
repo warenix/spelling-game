@@ -4,10 +4,17 @@ var Hypher = require('hypher'),
     english = require('hyphenation.en-us'),
     h = new Hypher(english);
 
-const getWordsFromStorage = () => {
-    const wordList = localStorage.getItem('wordList');
-    return wordList ? JSON.parse(wordList) : ["birthday", "afternoon", "teacher"];
-};
+    const getWordsFromStorage = () => {
+        const activeWordList = localStorage.getItem('activeWordList');
+        const wordLists = localStorage.getItem('wordLists');
+        if (activeWordList && wordLists) {
+            const parsedWordLists = JSON.parse(wordLists);
+            return parsedWordLists[activeWordList] || ["birthday", "afternoon", "teacher"];
+        }
+        return ["birthday", "afternoon", "teacher"];
+    };
+    
+
 
 const getMaskedWordAndChoices = (word) => {
     const chunks = h.hyphenate(word);

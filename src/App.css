@@ -79,9 +79,61 @@ button:disabled {
   background-color: #e76f51;
 }
 
-.word-list-button {
-  background-color: #264653;
+/* Add styles for the edit button and word list items */
+
+.word-list-name {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
 }
+
+.word-lists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.word-list-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.word-list-button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #264653;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.word-list-button:hover {
+  transform: scale(1.05);
+}
+
+.edit-word-list-button {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f4a261;
+  color: white;
+  cursor: pointer;
+}
+
+.edit-word-list-button:hover {
+  background-color: #e76f51;
+}
+
+
 
 .feedback {
   font-size: 1.2rem;
