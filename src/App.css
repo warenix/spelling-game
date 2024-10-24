@@ -12,7 +12,12 @@
 .game-title, .page-title {
   font-size: 2rem;
   color: #2a9d8f;
-  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navigation-button {
+  background-color: gainsboro;
 }
 
 .masked-word {
@@ -68,6 +73,10 @@ button:hover {
 button:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
+}
+
+button.rounded {
+  border-radius: 50px;
 }
 
 .speak-button {
@@ -195,10 +204,10 @@ button:disabled {
       font-size: 1.8rem;
   }
   .masked-word {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
   }
   button {
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       padding: 8px 16px;
   }
 }
