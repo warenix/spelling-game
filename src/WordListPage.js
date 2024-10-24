@@ -6,6 +6,8 @@ const WordListPage = () => {
     const [wordList, setWordList] = useState('');
     const [wordLists, setWordLists] = useState({});
     const [editingListName, setEditingListName] = useState('');
+    const [shareLink, setShareLink] = useState('');
+    const [importLink, setImportLink] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,6 +37,21 @@ const WordListPage = () => {
         navigate('/');
     };
 
+    const handleGenerateShareLink = (listName) => {
+        const words = wordLists[listName].join(',');
+        const link = `${window.location.origin}/import?wordList=${encodeURIComponent(words)}`;
+        setShareLink(link);
+    };
+
+    const handleImportWordList = () => {
+        const urlParams = new URLSearchParams(new URL(importLink).search);
+        const importedWordList = urlParams.get('wordList');
+        if (importedWordList) {
+            setWordList(importedWordList);
+            setWordListName('Imported List');
+        }
+    };
+
     return (
         <div className="container">
             <h1 className="page-title">Set Word Lists</h1>
@@ -55,6 +72,13 @@ const WordListPage = () => {
             <button onClick={handleSaveWordList} className="start-button">
                 {editingListName ? 'Save Changes' : 'Save Word List'}
             </button>
+            {shareLink && (
+                <div>
+                    <p>Share this link to import the word list:</p>
+                    <input type="text" value={shareLink} readOnly className="share-link-input" />
+                    <button onClick={() => navigator.clipboard.writeText(shareLink)} className="start-button">Copy Link</button>
+                </div>
+            )}
             <h2>Choose Active Word List</h2>
             <div className="word-lists">
                 {Object.keys(wordLists).map(listName => (
@@ -71,8 +95,25 @@ const WordListPage = () => {
                         >
                             Edit
                         </button>
+                        <button
+                            onClick={() => handleGenerateShareLink(listName)}
+                            className="share-word-list-button"
+                        >
+                            Share
+                        </button>
                     </div>
                 ))}
+            </div>
+            <div>
+                <h2>Import Word List</h2>
+                <input
+                    type="text"
+                    value={importLink}
+                    onChange={(e) => setImportLink(e.target.value)}
+                    placeholder="Enter share link"
+                    className="share-link-input"
+                />
+                <button onClick={handleImportWordList} className="start-button">Import</button>
             </div>
         </div>
     );

@@ -198,6 +198,30 @@ button.rounded {
   background-color: purple;
 }
 
+/* Styles for sharing and importing links */
+
+.share-link-input {
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.share-word-list-button {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f4a261;
+  color: white;
+  cursor: pointer;
+}
+
+.share-word-list-button:hover {
+  background-color: #e76f51;
+}
 
 @media (max-width: 600px) {
   .game-title, .page-title {
