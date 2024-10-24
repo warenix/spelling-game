@@ -48,6 +48,8 @@ const Game = () => {
     const [feedback, setFeedback] = useState('');
     const [showCorrectWord, setShowCorrectWord] = useState(false);
     const [wordClass, setWordClass] = useState('masked-word');
+    const [shake, setShake] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -107,6 +109,8 @@ const Game = () => {
             }
         }
         setFeedback('Try again.');
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
     };
 
     const getAllPermutations = (arr) => {
@@ -139,7 +143,7 @@ const Game = () => {
         <div className="container">
             <h1 className="game-title">Spelling Game</h1>
             <p>
-                <span className={wordClass} dangerouslySetInnerHTML={{ __html: showCorrectWord ? currentWord : maskedWordData.maskedWordToDisplay }}></span>
+            <span className={`${wordClass} ${shake ? 'shake incorrect' : ''}`} dangerouslySetInnerHTML={{ __html: showCorrectWord ? currentWord : maskedWordData.maskedWordToDisplay }}></span>
                 <button onClick={pronounceWord} className="speak-button">
                     Speak
                 </button>

@@ -166,6 +166,30 @@ button:disabled {
   transform: scale(1.05);
 }
 
+@keyframes shake {
+  0%, 100% {
+      transform: translateX(0);
+  }
+  25% {
+      transform: translateX(-5px);
+  }
+  50% {
+      transform: translateX(5px);
+  }
+  75% {
+      transform: translateX(-5px);
+  }
+}
+
+.masked-word.shake {
+  animation: shake 0.5s;
+}
+
+.masked-word.incorrect {
+  background-color: purple;
+}
+
+
 @media (max-width: 600px) {
   .game-title, .page-title {
       font-size: 1.8rem;
